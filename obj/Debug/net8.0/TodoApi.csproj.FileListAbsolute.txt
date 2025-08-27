@@ -1,3 +1,11 @@
+C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.csproj.AssemblyReference.cache
+C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.AssemblyInfoInputs.cache
+C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.AssemblyInfo.cs
+C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.csproj.CoreCompileInputs.cache
+C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.sourcelink.json
 C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\bin\Debug\net8.0\appsettings.json
 C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\bin\Debug\net8.0\TodoApi.staticwebassets.endpoints.json
@@ -88,14 +96,6 @@ C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\bin\Debug\
 C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.csproj.AssemblyReference.cache
-C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.AssemblyInfoInputs.cache
-C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.AssemblyInfo.cs
-C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.csproj.CoreCompileInputs.cache
-C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\TodoApi.sourcelink.json
 C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\scopedcss\bundle\TodoApi.styles.css
 C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\mital\Desktop\סמינר\פרקטיקוד\FS project\Backend\obj\Debug\net8.0\staticwebassets.development.json
