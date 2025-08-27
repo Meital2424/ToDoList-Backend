@@ -81,14 +81,14 @@ using Microsoft.AspNetCore.Mvc;
 var builder = WebApplication.CreateBuilder(args);
 
 // מאזינים מפורשים ל HTTP ו HTTPS
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenLocalhost(5101); // HTTP
-    options.ListenLocalhost(7097, listenOptions =>
-    {
-        listenOptions.UseHttps();  // HTTPS
-    });
-});
+// builder.WebHost.ConfigureKestrel(options =>
+// {
+//     options.ListenLocalhost(5101); // HTTP
+//     options.ListenLocalhost(7097, listenOptions =>
+//     {
+//         listenOptions.UseHttps();  // HTTPS
+//     });
+// });
 
 // CORS - פתיחת הרשאות כללית
 builder.Services.AddCors(options =>
@@ -112,23 +112,23 @@ builder.Services.AddDbContext<ToDoDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Version = "v1",
-        Title = "Todo API",
-        Description = "An ASP.NET Core Web API for managing ToDo items",
-        TermsOfService = new Uri("https://example.com/terms"),
-        Contact = new OpenApiContact
-        {
-            Name = "Example Contact",
-            Url = new Uri("https://example.com/contact")
-        },
-        License = new OpenApiLicense
-        {
-            Name = "Example License",
-            Url = new Uri("https://example.com/license")
-        }
-    });
+    // options.SwaggerDoc("v1", new OpenApiInfo
+    // {
+    //     Version = "v1",
+    //     Title = "Todo API",
+    //     Description = "An ASP.NET Core Web API for managing ToDo items",
+    //     TermsOfService = new Uri("https://example.com/terms"),
+    //     Contact = new OpenApiContact
+    //     {
+    //         Name = "Example Contact",
+    //         Url = new Uri("https://example.com/contact")
+    //     },
+    //     License = new OpenApiLicense
+    //     {
+    //         Name = "Example License",
+    //         Url = new Uri("https://example.com/license")
+    //     }
+    // });
 
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFilename);
@@ -139,6 +139,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+app.UseCors();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -167,8 +169,46 @@ app.MapGet("/", () => " ברוכה הבאה");
 // app.MapGet("/tasks", async (ToDoDbContext db) =>
 //     await db.Tasks.ToListAsync());
 
-app.MapGet("/tasks", async ([FromServices] ToDoDbContext db) =>
+// app.MapGet("/tasks", async ([FromServices] ToDoDbContext db) =>
+//     await db.Items.ToListAsync());
+
+app.MapGet("/tasks", async (ToDoDbContext db) =>
     await db.Items.ToListAsync());
+
+app.MapPost("/tasks", async (ToDoDbContext db, Item item) =>
+{
+    if (string.IsNullOrWhiteSpace(item.Name))
+        return Results.BadRequest("Task name cannot be empty.");
+
+    db.Items.Add(item);
+    await db.SaveChangesAsync();
+    return Results.Created($"/tasks/{item.Id}", item);
+});
+
+app.MapPut("/tasks/{id}", async (ToDoDbContext db, int id, Item updatedItem) =>
+{
+    if (string.IsNullOrWhiteSpace(updatedItem.Name))
+        return Results.BadRequest("Task name cannot be empty.");
+
+    var item = await db.Items.FindAsync(id);
+    if (item == null) return Results.NotFound();
+
+    item.Name = updatedItem.Name;
+    item.IsComplete = updatedItem.IsComplete;
+    await db.SaveChangesAsync();
+
+    return Results.NoContent();
+});
+
+app.MapDelete("/tasks/{id}", async (ToDoDbContext db, int id) =>
+{
+    var item = await db.Items.FindAsync(id);
+    if (item == null) return Results.NotFound();
+
+    db.Items.Remove(item);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
 
 
 // app.MapPost("/tasks", async (ToDoDbContext db, TaskItem? task) =>
@@ -181,15 +221,15 @@ app.MapGet("/tasks", async ([FromServices] ToDoDbContext db) =>
 //     return Results.Created($"/tasks/{task.Id}", task);
 // });
 
-app.MapPost("/tasks", async ([FromServices] ToDoDbContext db, [FromBody] Item? item) =>
-{
-    if (item == null || string.IsNullOrWhiteSpace(item.Name))
-        return Results.BadRequest("Task name cannot be empty.");
+// app.MapPost("/tasks", async ([FromServices] ToDoDbContext db, [FromBody] Item? item) =>
+// {
+//     if (item == null || string.IsNullOrWhiteSpace(item.Name))
+//         return Results.BadRequest("Task name cannot be empty.");
 
-    db.Items.Add(item);
-    await db.SaveChangesAsync();
-    return Results.Created($"/tasks/{item.Id}", item);
-});
+//     db.Items.Add(item);
+//     await db.SaveChangesAsync();
+//     return Results.Created($"/tasks/{item.Id}", item);
+// });
 
 
 // app.MapPut("/tasks/{id}", async (ToDoDbContext db, int id, TaskItem? updatedTask) =>
@@ -208,20 +248,20 @@ app.MapPost("/tasks", async ([FromServices] ToDoDbContext db, [FromBody] Item? i
 // });
 
 
-app.MapPut("/tasks/{id}", async ([FromServices] ToDoDbContext db, int id, [FromBody] Item? updatedItem) =>
-{
-    if (updatedItem == null || string.IsNullOrWhiteSpace(updatedItem.Name))
-        return Results.BadRequest("Task name cannot be empty.");
+// app.MapPut("/tasks/{id}", async ([FromServices] ToDoDbContext db, int id, [FromBody] Item? updatedItem) =>
+// {
+//     if (updatedItem == null || string.IsNullOrWhiteSpace(updatedItem.Name))
+//         return Results.BadRequest("Task name cannot be empty.");
 
-    var item = await db.Items.FindAsync(id);
-    if (item == null) return Results.NotFound();
+//     var item = await db.Items.FindAsync(id);
+//     if (item == null) return Results.NotFound();
 
-    item.Name = updatedItem.Name;
-    item.IsComplete = updatedItem.IsComplete;
+//     item.Name = updatedItem.Name;
+//     item.IsComplete = updatedItem.IsComplete;
 
-    await db.SaveChangesAsync();
-    return Results.NoContent();
-});
+//     await db.SaveChangesAsync();
+//     return Results.NoContent();
+// });
 
 
 // app.MapDelete("/tasks/{id}", async (ToDoDbContext db, int id) =>
@@ -235,15 +275,15 @@ app.MapPut("/tasks/{id}", async ([FromServices] ToDoDbContext db, int id, [FromB
 // });
 
 
-app.MapDelete("/tasks/{id}", async ([FromServices] ToDoDbContext db, int id) =>
-{
-    var item = await db.Items.FindAsync(id);
-    if (item == null) return Results.NotFound();
+// app.MapDelete("/tasks/{id}", async ([FromServices] ToDoDbContext db, int id) =>
+// {
+//     var item = await db.Items.FindAsync(id);
+//     if (item == null) return Results.NotFound();
 
-    db.Items.Remove(item);
-    await db.SaveChangesAsync();
-    return Results.NoContent();
-});
+//     db.Items.Remove(item);
+//     await db.SaveChangesAsync();
+//     return Results.NoContent();
+// });
 
 
 app.Run();

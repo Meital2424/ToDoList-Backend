@@ -4,11 +4,12 @@ using TodoApi.Models; // ייבוא המודל
 
 namespace TodoApi.Data
 {
-   public class TaskDbContext : DbContext
+    public class TaskDbContext : DbContext
     {
-        public TaskDbContext(DbContextOptions<TaskDbContext> options) : base(options) {}
+        public TaskDbContext(DbContextOptions<TaskDbContext> options) : base(options) { }
 
-        public DbSet<TaskItem> Tasks { get; set; }
+        // public DbSet<TaskItem> Tasks { get; set; }
+        public DbSet<Item> Tasks { get; set; }
 
         // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         // {

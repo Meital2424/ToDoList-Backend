@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: meital2424
+      MYSQL_DATABASE: items
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - todonet
+
+  todoapi:
+    build: .
+    ports:
+      - "5101:80"
+    depends_on:
+      - mysql
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    networks:
+      - todonet
+
+volumes:
+  dbdata:
+
+networks:
+  todonet:
