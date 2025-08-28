@@ -6,7 +6,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: meital2424
-      MYSQL_DATABASE: items
+      MYSQL_DATABASE: tasks
     ports:
       - "3306:3306"
     volumes:

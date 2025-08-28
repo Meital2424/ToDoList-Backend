@@ -325,8 +325,19 @@
 using Microsoft.EntityFrameworkCore;
 using TodoApi; // ודאי שה-Namespace של הפרויקט שלך הוא TodoApi
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// builder.Services.AddEndpointsApiExplorer();
+// builder.Services.AddSwaggerGen();
+builder.Services.AddControllers(); // זה יטפל ב-JSON Serializer
+
+// הוספת MySQL מתוך `appsettings.json`
+// var connectionString1 = builder.Configuration.GetConnectionString("DefaultConnection");
+// builder.Services.AddDbContext<ToDoDbContext>(options =>
+//     options.UseMySql(connectionString1, new MySqlServerVersion(new Version(8, 0, 36)))); // יש לעדכן לגרסה שלך
+
 
 // CORS - פתיחת הרשאות כללית עבור http://localhost:3000
 builder.Services.AddCors(options =>
@@ -389,10 +400,25 @@ app.MapGet("/tasks", async (ToDoDbContext db) =>
     return await db.Tasks.ToListAsync();
 });
 
-app.MapPost("/tasks", async (ToDoDbContext db, Item item) =>
+// app.MapPost("/tasks", async (ToDoDbContext db, Item item) =>
+// {
+//     if (string.IsNullOrWhiteSpace(item.Name))
+//         return Results.BadRequest("Task name cannot be empty.");
+
+//     db.Tasks.Add(item);
+//     await db.SaveChangesAsync();
+//     return Results.Created($"/tasks/{item.Id}", item);
+// });
+
+app.MapPost("/tasks", async (ToDoDbContext db, HttpContext context) =>
 {
-    if (string.IsNullOrWhiteSpace(item.Name))
+    // קוראים את ה-JSON מגוף הבקשה
+    var item = await context.Request.ReadFromJsonAsync<Item>();
+
+    if (item == null || string.IsNullOrWhiteSpace(item.Name))
+    {
         return Results.BadRequest("Task name cannot be empty.");
+    }
 
     db.Tasks.Add(item);
     await db.SaveChangesAsync();
